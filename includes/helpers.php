@@ -25,11 +25,11 @@ try {
     }
 
     } catch(PDOException $e) {
-    echo '<p>Error in function <code>search</code>:</p>' . "\n";
-    echo '<p id="error">' . $e->getMessage() . '</p>' . "\n";
-    echo "<p>There might be an issue with the database connection or query execution.</p>\n";
-    echo '<p>Click <a href="./">here</a> to go back.</p>';
-    exit;
+        echo '<p>Error in function <code>search</code>:</p>' . "\n";
+        echo '<p id="error">' . $e->getMessage() . '</p>' . "\n";
+        echo "<p>There might be an issue with the database connection or query execution.</p>\n";
+        echo '<p>Click <a href="./">here</a> to go back.</p>';
+        exit;
     }
     return $return;
 }
@@ -45,20 +45,31 @@ function search($attribute, $search) { //Search db
         $db->exec("SET @key_str = " . KEY_STR);
         $db->exec("SET @init_vector = " . INIT_VECTOR);
 
-        $select_query = "SELECT * FROM (
-            SELECT *,
-            CAST(AES_DECRYPT(password, @key_str, @init_vector) AS CHAR) AS decrypted_password FROM passwords
-            JOIN websites ON passwords.password_id = websites.site_id
-            JOIN users ON passwords.password_id = users.user_id
-            ) AS subquery
-            WHERE
-            subquery.{$attribute} LIKE :search;";
+        if($search != '*'){ //show only searched
+            $select_query = "SELECT * FROM (
+                SELECT *,
+                CAST(AES_DECRYPT(password, @key_str, @init_vector) AS CHAR) AS decrypted_password FROM passwords
+                JOIN websites ON passwords.password_id = websites.site_id
+                JOIN users ON passwords.password_id = users.user_id
+                ) AS subquery
+                WHERE
+                subquery.{$attribute} LIKE :search;";
 
-        $statement = $db -> prepare($select_query);
-        $statement -> execute(
-            array(
-                'search' => $search
-            ));
+            $statement = $db -> prepare($select_query);
+            $statement -> execute(
+                array(
+                    'search' => $search
+                ));
+
+        } else { //show all entrys
+            $select_query = "SELECT *, CAST(AES_DECRYPT(password, @key_str, @init_vector) AS CHAR) AS decrypted_password
+                FROM passwords
+                JOIN websites ON passwords.password_id = websites.site_id
+                JOIN users ON passwords.password_id = users.user_id";
+
+                $statement = $db -> prepare($select_query);
+                $statement -> execute();
+        }
 
         $results = $statement -> fetchAll((PDO::FETCH_ASSOC));
 
@@ -128,9 +139,14 @@ function update($attribute_relation, $input, $id) { //updates values in db
             $select_query = "UPDATE {$attribute_relation[1]}
                 SET {$attribute_relation[0]} = AES_ENCRYPT('{$input}', @key_str, @init_vector) WHERE password_id = :id";
 
+        } else if ($attribute_relation[1] == 'users') {
+
+            $select_query = "UPDATE {$attribute_relation[1]} SET {$attribute_relation[0]} = '{$input}' WHERE user_id = :id";
+
         } else {
 
-            $select_query = "UPDATE {$attribute_relation[1]} SET {$attribute_relation[0]} = '{$input}' WHERE user_id OR site_id = :id";
+            $select_query = "UPDATE {$attribute_relation[1]} SET {$attribute_relation[0]} = '{$input}' WHERE site_id = :id";
+
         }
         $statement = $db -> prepare($select_query);
         $statement -> execute(
@@ -138,7 +154,7 @@ function update($attribute_relation, $input, $id) { //updates values in db
                 'id' => $id
             ));
 
-        echo "{$attribute_relation[0]} has been updated ";
+        echo '<p id="response">' . $attribute_relation[0] . ' has been updated </p>';
         }
 
     catch(PDOException $e) {
@@ -192,7 +208,7 @@ function insert($new_website, $new_user, $new_password) { //insert new db entry
                 'new_password' => $new_password[0]
             ));
 
-        echo "New entry has been added!";
+        echo '<p id="response">New entry has been added! </p>';
     }
 
     catch(PDOException $e) {
@@ -217,7 +233,7 @@ function delete($id) { //Delete tuple from db
         $statement = $db -> prepare($select_query);
         $statement -> execute();
 
-        echo "Entry has been deleted";
+        echo '<p id="response"> Entry has been deleted! </p>';
     }
 
     catch(PDOException $e) {

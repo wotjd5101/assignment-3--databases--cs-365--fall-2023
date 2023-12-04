@@ -79,7 +79,7 @@
                 <option value="comment">Comment</option>
                 <option value="time_stamp">Time of Creation</option>
             </select>
-            <input type="text" name="input" placeholder="Search" required>
+            <input type="text" name="input" placeholder="Search, (enter '*' for all entry's)" required>
             <input type="hidden" name="submitted" value="0">
             <p>
                 <input type="submit" value="Search">
@@ -100,8 +100,8 @@
                 <option value="last_name,users">Last Name</option>
                 <option value="comment,users">Comment</option>
             </select>
-            <input type="text" name="input" placeholder="Value" required>
-            <input type="text" name="id" placeholder="ID to update" required>
+            <input type="text" name="id" placeholder="ID of entry update" required>
+            <input type="text" name="input" placeholder="Updated value" required>
             <input type="hidden" name="submitted" value="1">
             <p>
                 <input type="submit" value="Update">

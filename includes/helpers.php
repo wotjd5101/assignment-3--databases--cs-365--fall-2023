@@ -53,7 +53,7 @@ function search($attribute, $search) { //Search db
                 JOIN users ON passwords.password_id = users.user_id
                 ) AS subquery
                 WHERE
-                subquery.{$attribute} LIKE :search;";
+                subquery.{$attribute} LIKE CONCAT('%', :search, '%')";
 
             $statement = $db -> prepare($select_query);
             $statement -> execute(

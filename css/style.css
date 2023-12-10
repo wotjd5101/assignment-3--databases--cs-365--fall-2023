@@ -1,0 +1,40 @@
+body {
+  color: blue;
+  background-color: gray;
+  border: 1px solid black;
+}
+
+header {
+  display: block;
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 24px 0;
+}
+
+legend{
+  text-transform: uppercase;
+  color: papayawhip;
+  padding: 0 20px;
+}
+
+form select {
+  border: 0;
+  background-color: burlywood;
+  font-size: .9em;
+
+}
+
+form input {
+  background-color: white;
+  color: black;
+  vertical-align: top;
+}
+
+form input[type="submit"] {
+  border: 1px solid white;
+  padding: 5px;
+  background-color: white;
+  color: black;
+  font-size: .8em;
+}
+

@@ -1,0 +1,23 @@
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <fieldset>
+    <legend>Update</legend>
+    UPDATE Information SET
+    <select name="current-attribute" id="current-attribute">
+      <option>Site</option>
+      <option>URL</option>
+      <option>Email_Address</option>
+      <option>UserName</option>
+      <option>PW</option>
+    </select>
+    = <input type="text" name="new-attribute" required> WHERE
+    <select name="query-attribute" id="query-attribute">
+      <option>Site</option>
+      <option>Email_Address</option>
+      <option>UserName</option>
+    </select>
+    = <input type="text" name="pattern" required> AND ID 
+      <input type="text" name="ID" required>
+    <input type="hidden" name="submitted" value="UPDATE">
+    <p><input type="submit" value="update"></p>
+  </fieldset>
+</form>

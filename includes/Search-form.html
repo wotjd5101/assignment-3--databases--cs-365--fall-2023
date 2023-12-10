@@ -1,0 +1,14 @@
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <fieldset>
+    <legend>Search</legend>
+    Select * FROM Information WHERE
+    <select name="current_attribute" id="current_attribute">
+      <option>Site</option>
+      <option>Email_Address</option>
+      <option>UserName</option>
+    </select>
+    = <input type="text" name="search" autofocus required>
+    <input type="hidden" name="submitted" value="SEARCH">
+    <p><input type="submit" value="search"></p>
+  </fieldset>
+</form>

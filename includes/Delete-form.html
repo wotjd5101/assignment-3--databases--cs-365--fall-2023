@@ -1,0 +1,13 @@
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <fieldset>
+    <legend>Delete</legend>
+    DELETE FROM Information WHERE
+    <select name="current-attribute" id="current-attribute">
+      <option>UserName</option>
+      <option>Email_Address</option>
+    </select>
+    = <input type="text" name="pattern" required>
+      <input type="hidden" name="submitted" value="DELETE">
+    <p><input type="submit" value="delete"></p>
+  </fieldset>
+</form>

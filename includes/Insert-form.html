@@ -1,0 +1,15 @@
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+  <fieldset>
+    <legend>Insert</legend>
+    INSERT INTO Information VALUES <br><br>
+    <input type="text" name="Site" placeholder="Site" required>
+    <input type="text" name="URL" placeholder="URL" required> <br><br>
+    <input type="email" name="Email_Address" placeholder="Email_Address" required> 
+    <input type="text" name="UserName" placeholder="UserName" required> <br><br>
+    <input type="text" name="Password" placeholder="Password" required> <br><br>
+    <p><label for="comment">Comment</label></p>
+    <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+    <input type="hidden" name="submitted" value="INSERT">
+    <p><input type="submit" value="insert"></p>
+  </fieldset>
+</form>
